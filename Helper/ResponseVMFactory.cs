@@ -11,5 +11,13 @@
         {
             return new ResponseVM(statusCode, message);
         }
+        public static ResponseVM NotFound(string message, int statusCode)
+        {
+            return new ResponseVM(statusCode, message);
+        }
+        public static ResponseVM BadRequest(string message, int statusCode)
+        {
+            return new ResponseVM(statusCode, message);
+        }
     }
 }

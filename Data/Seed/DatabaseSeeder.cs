@@ -18,7 +18,7 @@ namespace RedisAcceleratedAPI.API.Data.Seed
             if (!await _context.Products.AnyAsync())
             {
                 _logger.LogInformation("Seeding database...");
-                var products = Enumerable.Range(1, 10000).Select(i => new Product
+                var products = Enumerable.Range(1, 10).Select(i => new Product
                 {
                     Name = $"Product {i}",
                     Price = (decimal)(i * 0.99)
