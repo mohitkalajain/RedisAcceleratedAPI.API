@@ -20,8 +20,8 @@ namespace RedisAcceleratedAPI.API.Repository.Implementation
         public async Task<ResponseVM> GetProductsAsync()
         {
             // Check if data is in Redis cache
-            var cacheKey = "products";
-            var cachedProducts = await _redisDb.StringGetAsync(cacheKey);
+            
+            var cachedProducts = await _redisDb.StringGetAsync(AppConstants.CacheKeys.Products);
 
             if (!cachedProducts.IsNullOrEmpty)
             {
@@ -33,7 +33,8 @@ namespace RedisAcceleratedAPI.API.Repository.Implementation
             var products = await _context.Products.ToListAsync();
 
             // Store data in Redis for future requests
-            await _redisDb.StringSetAsync(cacheKey, JsonSerializer.Serialize(products), TimeSpan.FromMinutes(10));
+            await _redisDb.StringSetAsync(AppConstants.CacheKeys.Products, JsonSerializer.Serialize(products), 
+                                                TimeSpan.FromMinutes(AppConstants.CacheDuration.ProductsCacheMinutes));
 
             return ResponseVMFactory.Success(JsonSerializer.Serialize(products));
         }
